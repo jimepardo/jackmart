@@ -1,5 +1,23 @@
+import express from "express";
+
 import { deleteProduct, modifiedProduct, createProduct, getProductById, getProducts } from "./callbacks.js";
 
+const app = express();
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to JackMart API" });
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
+
+/*
 let [, , method, resource, ...params] = process.argv;
 
 method = method.toUpperCase();
@@ -71,4 +89,4 @@ async function processRequest(method, resource, productData) {
     }
 }
 
-processRequest(method, resource, productData);
+processRequest(method, resource, productData);*/
