@@ -14,3 +14,20 @@ export const getProductById = (req, res) => {
         res.status(404).json({ message: "Product not found" });
     }
 };
+
+export const createProduct = async (name, price, category) => {
+    const product = {
+        name,
+        price,
+        category
+    };
+
+    try {
+        await productService.initialize();
+    } catch (error) {
+        console.error("Failed to initialize product service:", error);
+        throw error;
+    }
+
+    return await productService.createProduct(product);
+};

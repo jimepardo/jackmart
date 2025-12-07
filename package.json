@@ -1,5 +1,5 @@
 {
-  "name": "pre-entrega-pardo",
+  "name": "entrega-pardo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,7 +13,9 @@
   "type": "module",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "dotenv": "^17.2.3",
+    "firebase": "^12.6.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
