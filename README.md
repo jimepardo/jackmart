@@ -29,6 +29,10 @@ npm run start PUT products "T-Shirt" 199 "T-Shirts"
 ```shell
 npm run start DELETE products/15
 ```
+## Install Dependencies
+
+- Express: `npm i express`
+- Cors: `npm i cors`
 
 ### Author
 - Pardo, Jimena
