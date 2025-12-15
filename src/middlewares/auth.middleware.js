@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const auth = (req, res, next) => {
   const token = req.headers.authorization;
-  if(!token || !token.startsWith("Bearer ")) return res.sendStatus(401).json({ message: "Unauthorized - need token" });
+  if (!token || !token.startsWith("Bearer ")) return res.sendStatus(401).json({ message: "Unauthorized - need token" });
 
   try {
     const extractedToken = token.split(" ")[1];

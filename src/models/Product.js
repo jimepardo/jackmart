@@ -5,12 +5,12 @@ import { collection, getDocs, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc,
 const productsCollection = collection(db, "products");
 
 export const getAllProducts = async () => {
-    try {   
+    try {
         const snapshot = await getDocs(productsCollection);
         return snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
-        }));        
+        }));
     } catch (error) {
         console.error("Error fetching products: ", error);
     }
@@ -18,16 +18,16 @@ export const getAllProducts = async () => {
 
 export const getProductById = async (id) => {
     try {
-            const productRef = doc(productsCollection, id);
-            const snapshot = await getDoc(productRef);
-            return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null;
-        } catch (error) {
-            console.error(`Error fetching product by ID: ${id}`, error);
-            throw error;
-        }
+        const productRef = doc(productsCollection, id);
+        const snapshot = await getDoc(productRef);
+        return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null;
+    } catch (error) {
+        console.error(`Error fetching product by ID: ${id}`, error);
+        throw error;
+    }
 };
 
-export async function getProductsByCategory(categoryId) {
+export const getProductsByCategory = async (categoryId) => {
     try {
         const q = query(productsCollection, where("category", "array-contains", categoryId));
         const querySnapshot = await getDocs(q);
@@ -48,7 +48,7 @@ export const createProduct = async (productData) => {
     } catch (error) {
         console.error("Error creating product: ", error);
         throw error;
-    }   
+    }
 };
 
 export const updateProduct = async (id, updatedData) => {
@@ -59,11 +59,11 @@ export const updateProduct = async (id, updatedData) => {
             return false;
         }
         await setDoc(productRef, updatedData);
-        return {id, ...updatedData};
+        return { id, ...updatedData };
     } catch (error) {
         console.error(`Error updating product with ID: ${id}`, error);
         throw error;
-    }   
+    }
 };
 
 export const updateProductPartial = async (id, updatedData) => {
@@ -74,11 +74,11 @@ export const updateProductPartial = async (id, updatedData) => {
             return false;
         }
         await updateDoc(productRef, updatedData);
-        return {id, ...updatedData};
+        return { id, ...updatedData };
     } catch (error) {
         console.error(`Error updating product with ID: ${id}`, error);
         throw error;
-    }   
+    }
 };
 
 export const deleteProduct = async (id) => {
@@ -87,11 +87,11 @@ export const deleteProduct = async (id) => {
         const snapshot = await getDoc(productRef);
         if (!snapshot.exists()) {
             return false;
-        }   
+        }
         await deleteDoc(productRef);
         return true;
     } catch (error) {
         console.error(`Error deleting product with ID: ${id}`, error);
         throw error;
-    }   
+    }
 };

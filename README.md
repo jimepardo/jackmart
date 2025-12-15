@@ -21,6 +21,9 @@ cp .env-example .env
 npm run dev
 ```
 
+## Deployment 
+- https://jackmart.vercel.app/
+
 ## API Documentation
 
 ### Get All Products
@@ -46,6 +49,17 @@ npm run dev
 - **Example Response:**
 ```shell
 { "id": 5, "name": "Alfombra rectangular", "price": 190 }
+```
+
+### Search Products by Category
+- **GET** `/products?category=keyword`
+- **Description:** Returns all products that contains the category indicated.
+- **Parameters:** 
+    - `category` (query, required): Category product.
+- **Usage Example**: `/products?category=lana`
+- **Example Response:**
+```shell
+{ "id": 5, "name": "Alfombra rectangular", "price": 190, "category": ["lana", "azul"] }
 ```
 
 ### Search Products by Name
@@ -117,11 +131,19 @@ npm run dev
 ```shell
 src/
 ├── Controllers/
+|   ├── auth.controller.js
 │   └── products.controller.js
+├── Middlewares/
+│   └── auth.middleware.js
 ├── Models/
-│   └── Product.js
-└── Routes/
-    └── products.router.js
+|   ├── firebase.js
+|   ├── Product.js
+│   └── User.js
+├── Routes/
+|   ├── auth.router.js
+|   └── products.router.js
+└── Services/
+    └── products.service.js
 ```
 
 ## Technologies Used

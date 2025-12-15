@@ -10,16 +10,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to JackMart API" });
 });
 app.use("/api/auth", authRouter);
 
-app.use("/api", auth, productsRouter);
+app.use("/api/products", auth, productsRouter);
 
 app.use((req, res, next) => {
-  res.status(404).json({ error: "Not found" });
+    res.status(404).json({ error: "Not found" });
 });
 
 const PORT = process.env.PORT || 3000;
