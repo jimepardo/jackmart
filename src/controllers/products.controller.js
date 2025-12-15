@@ -3,17 +3,13 @@ import * as Model from "../models/products.model.js";
 
 export const getAllProducts = async (req, res) => {
     const { category } = req.query;
-
-    const products = await Model.getAllProducts();
-
     if (category) {
-        const productsFiltered = products.filter((prod) =>
-            prod.category.includes(category)
-        );
-        res.json(productsFiltered);
-        return;
+        const productsByCategory = await Model.getProductsByCategory(category);
+      
+        return res.json(productsByCategory);
     }
 
+    const products = await Model.getAllProducts();
     res.json(products);
 };
 

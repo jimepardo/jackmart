@@ -27,20 +27,18 @@ export const getProductById = async (id) => {
         }
 };
 
-export async function getProducts(categoryId) {
-  const productsCollection = collection(db, "products");
-    let q;
-    if (categoryId) {
-        q = query(productsCollection, where("category", "==", categoryId));
-    } else {
-        q = productsCollection;
+export async function getProductsByCategory(categoryId) {
+    try {
+        const q = query(productsCollection, where("category", "array-contains", categoryId));
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+    } catch (error) {
+        console.error("Error fetching products by category: ", error);
+        throw error;
     }
-    const querySnapshot = await getDocs(q);
-    const products = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
-    return products;
 };
 
 export const createProduct = async (productData) => {
