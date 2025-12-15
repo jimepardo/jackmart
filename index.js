@@ -2,34 +2,21 @@ import express from "express";
 import cors from "cors";
 import authRouter from "./src/routes/auth.router.js";
 import { auth } from "./src/middlewares/auth.middleware.js";
-import { deleteProduct, modifiedProduct, createProduct, getProductById, getProducts } from "./callbacks.js";
+import "dotenv/config";
+import productsRouter from "./src/routes/products.router.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(auth);
+
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to JackMart API" });
 });
+app.use("/api/auth", authRouter);
 
-app.use("/api", authRouter);
-
-app.post("/products", (req, res) => {
-  //   console.log(req.body.name);
-  const { name, price } = req.body;
-
-  const product = {
-    id: Math.max(...products.map((p) => p.id)) + 1,
-    name,
-    price,
-  };
-
-  products.push(product);
-
-  res.status(201).json(product);
-});
+app.use("/api", auth, productsRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Not found" });

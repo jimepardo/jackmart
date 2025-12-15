@@ -1,12 +1,15 @@
 import jwt from "jsonwebtoken";
 
 export const auth = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
+  const token = req.headers.authorization;
+  if(!token || !token.startsWith("Bearer ")) return res.sendStatus(401).json({ message: "Unauthorized - need token" });
 
-  if (!token) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.SECRET, (error) => {
-    if (error) return res.sendStatus(403);
+  try {
+    const extractedToken = token.split(" ")[1];
+    const decoded = jwt.verify(extractedToken, process.env.JWT_SECRET);
+    req.user = decoded;
     next();
-  });
+  } catch (error) {
+    return res.sendStatus(401).json({ message: "Invalid token" });
+  }
 };

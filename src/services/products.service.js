@@ -1,18 +1,14 @@
-const products = [
-    { id: 1, name: "Laptop", price: 999.99 },
-    { id: 2, name: "Smartphone", price: 499.99 },
-    { id: 3, name: "Tablet", price: 299.99 }
-];
+import * as model from "../models/products.model.js";
 
-const getProducts = async () => {
-    return products;
+export const getAllProducts = () => {
+    return model.getAllProducts();
 };
 
-const getProductById = async (id) => {
-    return products.find(product => product.id === id);
+export const getProductById = (id) => {
+    return model.getProductById(id);
 };
 
 export default {
-    getProducts,
-    getProductById
+    getAllProducts,
+    getProductById,
 };

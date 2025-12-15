@@ -1,38 +1,133 @@
-# Pre-release Node.js
+# Api Rest in Node.js
 
-## Obtain all products
+## Description
 
+REST API for product management developed in Node.js and Express.
+
+## Installation Instructions
+
+1. Clone the repository
+2. Install dependencies
 ```shell
-npm run start GET products
+npm install
+```
+3. Configure environment variables:
+```shell
+cp .env-example .env
+```
+- Then edit the .env file with the appropriate values for your environment.
+4. Run in development mode:
+```shell
+npm run dev
 ```
 
-## Obtain an specific product
+## API Documentation
+
+### Get All Products
+- **GET** `/products`
+- **Description:** Returns the list of all products.
+- **Example Response:**
 
 ```shell
-npm run start GET products/15
+[
+  { "id": 1, "name": "Alfombra de Bugs Bunny", "price": 150 },
+  { "id": 2, "name": "Alfombra circular", "price": 1200 },
+  { "id": 3, "name": "Alfombra de Los Simpsons", "price": 350 }
+]
+
 ```
 
-## Add a new product
-
+### Get an Specific Product
+- **GET** `/products/:id`
+- **Description:** Returns a specific product by its ID.
+- **Parameters:** 
+    - `id` (path, required): Product ID.
+- **Usage Example**: `/products/5`
+- **Example Response:**
 ```shell
-npm run start POST products "T-Shirt" 200 "T-Shirts"
+{ "id": 5, "name": "Alfombra rectangular", "price": 190 }
 ```
 
-## Modified product
-
+### Search Products by Name
+- **GET** `/products/search?name=keyword`
+- **Description:** Returns products whose name contains the specified keyword.
+- **Parameters:**
+    - `name` (query, required): text to search within the product name.
+- **Usage Example:** `/products/search?name=alfombra`
+- **Example Response:**
 ```shell
-npm run start PUT products "T-Shirt" 199 "T-Shirts"
+[{ "id": 1, "name": "Alfombra de Bugs Bunny", "price": 150 },
+{ "id": 2, "name": "Alfombra circular", "price": 120 }]
 ```
 
-## Delete product
-
+### Add a New Product
+- **POST** `/products`
+- **Description:** Creates a new product.
+- **Body (JSON):**
 ```shell
-npm run start DELETE products/15
+{ "name": "New Product", "price": 999 }
 ```
-## Install Dependencies
+- **Example Response:**
+```shell
+{ "id": 6, "name": "New Product", "price": 999 }
+```
 
-- Express: `npm i express`
-- Cors: `npm i cors`
+### Update Product
+- **PUT** `/products/:id`
+- **Description:** Fully updates an existing product.
+- **Parameters:**
+    - `id` (path, required): ID of the product to update.
+- **Body (JSON):**
+```shell
+{ "name": "Updated Product", "price": 500 }
+```
+- **Example Response:**
+```shell
+{ "id": 1, "name": "Updated Product", "price": 500 }
+```
+### Partially Update a Product (PATCH)
+- **PATCH** `/products/:id`
+- **Description:** Partially updates an existing product.
+- **Parameters:**
+    - `id` (path, required): ID of the product to update.
+- **Body (JSON):** Only the fields to be updated
+```shell
+{ "price": 600 }
+```
+- **Example Response:**
+```shell
+{ "id": 1, "name": "Alfombra ovalada verde", "price": 600 }
+```
 
-### Author
+### Delete Product
+- **DELETE** `/products/:id`
+- **Description:** Deletes a product by its ID.
+- **Parameters:**
+    - `id` (path, required): ID of the product to delete.
+- **Response:** 204 No Content
+
+## Status Codes
+- `200` - **OK:** Successful operation
+- `201` - **Created:** Resource successfully created
+- `204` - **No Content:** Resource successfully deleted
+- `400` - **Bad Request:** Invalid input data
+- `404` - **Not Found:** Resource not found
+
+## Project Structure
+```shell
+src/
+├── Controllers/
+│   └── products.controller.js
+├── Models/
+│   └── Product.js
+└── Routes/
+    └── products.router.js
+```
+
+## Technologies Used
+- Node.js
+- Express.js
+- ES6 Modules
+
+## Author
 - Pardo, Jimena
