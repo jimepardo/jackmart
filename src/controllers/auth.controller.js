@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { createUser, findUserByUsername } from "../models/User.js";
+import usersService from "../services/users.service.js";
 
 export const registerUser = async (req, res) => {
     const { username, password } = req.body;
@@ -9,14 +9,14 @@ export const registerUser = async (req, res) => {
         return res.status(422).json({ message: "Username and password are required" });
     }
 
-    const existingUser = await findUserByUsername(username);
+    const existingUser = await usersService.findUserByUsername(username);
     if (existingUser) {
         return res.status(409).json({ message: "Username already exists" });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const user = await createUser(username, passwordHash);
+    const user = await usersService.createUser(username, passwordHash);
     if (!user) {
         return res.sendStatus(503);
     }
@@ -30,7 +30,7 @@ export const loginUser = async (req, res) => {
         return res.status(422).json({ message: "Username and password are required" });
     }
 
-    const user = await findUserByUsername(username);
+    const user = await usersService.findUserByUsername(username);
     if (!user) {
         return res.status(401).json({ message: "Invalid credentials" });
     }
