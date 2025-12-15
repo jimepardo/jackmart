@@ -131,17 +131,17 @@ npm run dev
 ```shell
 src/
 ├── Controllers/
-|   ├── auth.controller.js
+│   ├── auth.controller.js
 │   └── products.controller.js
 ├── Middlewares/
 │   └── auth.middleware.js
 ├── Models/
-|   ├── firebase.js
-|   ├── Product.js
+│   ├── firebase.js
+│   ├── Product.js
 │   └── User.js
 ├── Routes/
-|   ├── auth.router.js
-|   └── products.router.js
+│   ├── auth.router.js
+│   └── products.router.js
 └── Services/
     ├── users.service.js
     └── products.service.js
